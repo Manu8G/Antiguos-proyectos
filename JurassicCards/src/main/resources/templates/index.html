@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en", xmlns:th="http://wwww.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <title>Juego</title>
+
+        <style>
+            .row {
+                border: 2px solid green;
+                text-align: center;
+                width: 1050px;
+                height: 100px;
+                white-space:pre-wrap;
+                margin:0 auto;
+                font-weight: bold;
+                vertical-align: middle;
+                font-size: 20px;
+                background-color: white;
+            }
+
+            .col {
+                border: 2px solid green;
+                text-align: center;
+                width: 1000px;
+                height: 100px;
+                white-space:pre-wrap;
+                margin:0 auto;
+                font-weight: bold;
+                vertical-align: middle;
+                font-size: 20px;
+                background-color: white;
+            }
+
+            .button {
+                text-align: center;
+                justify-content: center;
+                border: none;
+                color: white;
+                padding: 10px 20px;
+                transition-duration: 0.4s;
+                margin: 1px 40px;
+            }
+
+            .boton1 {
+                background-color: white;
+                color: black;
+                border: 2px solid #4CAF50;
+                font-size: 20px;
+                font-weight: bold;
+            }
+
+            .boton1:hover {
+                background-color: #4CAF50;
+                color: white;
+                font-weight: bold;
+            }
+
+            .boton2 {
+                background-color: white;
+                color: black;
+                border: 2px solid #008CBA;
+                font-size: 20px;
+                font-weight: bold;
+            }
+
+            .boton2:hover {
+                background-color: #008CBA;
+                color: white;
+                font-weight: bold;
+            }
+
+            .boton3 {
+                background-color: white;
+                color: black;
+                border: 2px solid #FF0000;
+                font-size: 20px;
+                font-weight: bold;
+            }
+
+            .boton3:hover {
+                background-color: #FF0000;
+                color: white;
+                font-weight: bold;
+            }
+
+            .jugador1 {
+                border-left: 10px solid blue;
+                background-color: lightblue;
+                color: black;
+                word-spacing: 850px;
+                text-align: center;
+                font-size: 30px;
+                font-weight: bold;
+            }
+
+            .jugador2 {
+                border-left: 10px solid red;
+                background-color: #F08080;
+                color: black;
+                word-spacing: 850px;
+                text-align: center;
+                font-size: 30px;
+                font-weight: bold;
+            }
+
+            .select {
+                font-size: 20px;
+                padding: 5px 5px;
+                margin: 1px 5px;
+            }
+
+            .final {
+                color: white;
+                font: 15px;
+            }
+        </style>
+    </head>
+
+    <body style="background-color: black;">
+        <div class="container">
+            <div class="jugador1">
+                <p th:text="${Jugador1}"/>
+            </div>
+
+            <div class="row">
+                <div class="col"><p th:text="${ManoJugador1_0}"/></div>
+                <div class="col"><p th:text="${ManoJugador1_1}"/></div>
+                <div class="col"><p th:text="${ManoJugador1_2}"/></div>
+                <div class="col"><p th:text="${ManoJugador1_3}"/></div>
+                <div class="col"><p th:text="${ManoJugador1_4}"/></div>
+            </div>
+
+            <div class="row">
+                <div class="col"><p th:text="${CasillaJugador1_0}"/></div>
+                <div class="col"><p th:text="${CasillaJugador1_1}"/></div>
+                <div class="col"><p th:text="${CasillaJugador1_2}"/></div>
+                <div class="col"><p th:text="${CasillaJugador1_3}"/></div>
+                <div class="col"><p th:text="${CasillaJugador1_4}"/></div>
+            </div>
+
+            <br>
+            <div class="button">
+                <form action="#" th:action="@{/jurassic/partida}" method="post">
+                    <button class="button boton1" type="submit" name="action" th:value="ponercarta" th:text="PonerCarta"></button>
+                    <select class="select" name="c">
+                        <option name="c" th:value="1" th:text="1"></option>
+                        <option name="c" th:value="2" th:text="2"></option>
+                        <option name="c" th:value="3" th:text="3"></option>
+                        <option name="c" th:value="4" th:text="4"></option>
+                        <option name="c" th:value="5" th:text="5"></option>
+                    </select>
+                    <button class="button boton2" type="submit" name="action" th:value="atacar" th:text="Atacar"></button>
+                    <button class="button boton3" type="submit" name="action" th:value="pasarturno" th:text="PasarTurno"></button>
+                    <p style="display:inline" th:text="${turno}"/>
+                    <p style="display:inline" th:text="${Turno}"/>
+                </form>
+            </div>
+            <br>
+
+            <div class="row">
+                <div class="col"><p th:text="${CasillaJugador2_0}"/></div>
+                <div class="col"><p th:text="${CasillaJugador2_1}"/></div>
+                <div class="col"><p th:text="${CasillaJugador2_2}"/></div>
+                <div class="col"><p th:text="${CasillaJugador2_3}"/></div>
+                <div class="col"><p th:text="${CasillaJugador2_4}"/></div>
+            </div>
+
+            <div class="row">
+                <div class="col"><p th:text="${ManoJugador2_0}"/></div>
+                <div class="col"><p th:text="${ManoJugador2_1}"/></div>
+                <div class="col"><p th:text="${ManoJugador2_2}"/></div>
+                <div class="col"><p th:text="${ManoJugador2_3}"/></div>
+                <div class="col"><p th:text="${ManoJugador2_4}"/></div>
+            </div>
+            <br>
+            <div class="jugador2">
+                <p th:text="${Jugador2}"/>
+            </div>
+
+            <div class="final">
+                <p style="display:inline" th:text="${texto1}"/>
+                <p style="display:inline" th:text="${Final}"/>
+                <p style="display:inline" th:text="${texto2}"/>
+            </div>
+        </div>
+    </body>
+</html>
