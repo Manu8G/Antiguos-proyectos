@@ -1,0 +1,9 @@
+<ul class="list-unstyled">
+    {% if listaEventos%}
+        {% for fila in listaEventos %}
+            <li>{{ fila.nombre }}</li>
+        {% endfor %}
+    {% else %}
+        <li>Evento no encontrado</li>
+    {% endif %}
+</ul>
