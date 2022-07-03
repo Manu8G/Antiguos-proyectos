@@ -1,0 +1,3 @@
+grant codeBase "file:/home/manuel/Escritorio/DSD/P3/Ejercicio"{
+    permission java.security.AllPermission;
+};
