@@ -1,0 +1,70 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Usuarios</title>
+	</head>
+	<body>
+		<div id="resultados">
+			<ul id="lista">
+				
+			</ul>
+		</div>
+		<div id="estados">
+			<p> Estado de la persiana: <span id="estadoActualPersiana"></span></p>
+			<p> Estado del aire acondicionado: <span id="estadoActualAC"></span></p>
+			<button id="updateEstadoPersiana">Activar persiana</button>
+			<button id="updateEstadoAC">Activar A/C</button>
+		</div>
+		<div>
+			<p id="mensajeAlertaLuz"></p>
+			<p id="mensajeAlertTemp"></p>
+		</div>
+	</body>
+	<script src="/socket.io/socket.io.js"></script>
+	<script type="text/javascript">
+		var serviceURL='localhost:8080';
+		var socket=io.connect(serviceURL);
+
+		socket.on('actualizar', function(data){
+			var listElement=document.getElementById('lista');
+			var listItem=document.createElement('li');
+			listItem.innerHTML=data;
+			listElement.appendChild(listItem);
+			document.getElementById('mensajeAlertaLuz').innerHTML='Luz correcta';
+			document.getElementById('mensajeAlertTemp').innerHTML='Temperatura correcta';
+		});
+
+	//Persiana y luz
+		//Se produce un cambio y el servidor manda los nuevos datos
+		socket.on('setEstadoPersiana', function(data){
+			var estadoActualPersiana=document.getElementById('estadoActualPersiana');
+			estadoActualPersiana.innerHTML=data;
+		});
+		//Se hace click en el boton de cambiar el estado de la persiana
+		var boton_persiana=document.getElementById('updateEstadoPersiana');
+		boton_persiana.onclick=function(){
+			socket.emit('updateEstadoPersiana');
+		}
+		//Se activa el mensaje de la alerta de luz
+		socket.on('updateAlertLuz', function(data){
+			document.getElementById('mensajeAlertaLuz').innerHTML=" La luz ("+ data+") se ha salido del rango establecido, se va"+
+			" a proceder a cambiar este valor usando la persiana.";
+		});
+
+	//Aire acondicionado y temperatura
+		socket.on('setEstadoAC', function(data){
+			var estadoActualAC=document.getElementById('estadoActualAC');
+			estadoActualAC.innerHTML=data;
+		});
+		//Se hace click en el boton de cambiar el estado del aire acondicionado
+		var boton_ac=document.getElementById('updateEstadoAC');
+		boton_ac.onclick=function(){
+			socket.emit('updateEstadoAC');
+		}
+		//Se activa el mensaje de la alerta de temperatura
+		socket.on('updateAlertTemp', function(data){
+			document.getElementById('mensajeAlertTemp').innerHTML=" La temperatura ("+ data +"ºC) se ha salido del rango "+ 
+			"establecido, se va a proceder a cambiar este valor usando el aire acondicionado.";
+		});
+	</script>
+</html>

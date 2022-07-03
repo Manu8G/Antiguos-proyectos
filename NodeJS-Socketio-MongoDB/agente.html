@@ -1,0 +1,56 @@
+
+
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Agente</title>
+	</head>
+	<body>
+	</body>
+	<script src="/socket.io/socket.io.js"></script>
+	<script type="text/javascript">
+		var serviceURL='localhost:8080';
+		var socket = io.connect(serviceURL);
+		var tempMAX=30;
+		var tempMIN=20;
+		var tempActual=25;
+		var luzMAX=70;
+		var luzMIN=30;
+		var luzActual=50;
+		var estadoPersiana='';
+	
+	//Persiana y luz
+		function usarPersiana(){
+			socket.emit('usarPersiana');
+		}
+		
+		socket.on('getEstadoPersiana', function(data){
+			estadoPersiana=data;
+		});
+
+		socket.on('actualizarLuz', function(data){
+			luzActual=data;
+			if (luzActual>luzMAX || luzActual<luzMIN){
+				socket.emit('luzAlert',luzActual);
+				usarPersiana();
+			}
+		});
+	
+	//Aire acondicionado y temperatura
+		function usarAC(){
+			socket.emit('usarAC');
+		}
+
+		socket.on('getEstadoAC', function(data){	
+			estadoPersiana=data;
+		});
+
+		socket.on('actualizarTemp', function(data){
+			tempActual=data;
+			if(tempActual>tempMAX || tempActual<tempMIN){
+				socket.emit('tempAlert',tempActual);
+				usarAC();
+			}
+		});
+	</script>
+</html>
